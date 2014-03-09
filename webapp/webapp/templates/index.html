@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row">
+
+  <div class="span6">
+    <form action="{% url 'search' %}" method="get">
+
+      <legend>Search</legend>
+
+      {% for field in form %}
+      <div>
+        <label class="control-label" for="{{ form.field.auto_id }}">{{ field.label }}</label>
+        {{ field }}
+        {% for error in field.errors %}
+        <span class="help-inline">{{ error }}</span>
+        {% endfor %}
+      </div>
+      {% endfor %}
+
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+  </div>
+
+  <div class="span6">
+    <form class="form-horizontal">{% csrf_token %}
+      <legend>File upload</legend>
+
+      <span class="help-block">The file needs to be analyzed after submission so this might take a couple of seconds depending on the size of the file.</span>
+      <br>
+      <span class="btn btn-primary fileinput-button">
+          <i class="icon-plus icon-white"></i>
+          <span>Select files...</span>
+          <input id="fileupload" type="file" name="files[]" multiple>
+      </span>
+
+      <span>
+        &nbsp;&nbsp;&nbsp;k=
+        <input id="id_k" class="input-mini" type="text" value="1" name="k">
+      </span>
+
+      <br><br>
+      <div id="progress" class="progress progress-striped">
+        <div class="bar"></div>
+      </div>
+      <div id="files" class="files"></div>
+      <span class="help-block" style="display:none" id="msg-analyzing">Analyzing file; please wait...</span>
+    </form>
+  </div>
+
+</div>
+{% endblock %}

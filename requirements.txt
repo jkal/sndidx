@@ -1,0 +1,9 @@
+Django==1.5.1
+django-browserid==0.8
+requests==1.2.0
+scipy==0.12.0
+numpy==1.7.1
+Rtree==0.7.0
+pyechonest==7.2.1
+gunicorn==17.5
+pymongo==2.5.2

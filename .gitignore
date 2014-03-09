@@ -1,0 +1,4 @@
+*.idx
+*.dat
+.DS_Store
+*.pyc

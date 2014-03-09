@@ -1,0 +1,79 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>{% block title %}Graph{% endblock %}</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="{% static "css/graph/legend.css" %}">
+    <link rel="stylesheet" href="{% static "css/graph/detail.css" %}">
+    <link rel="stylesheet" href="{% static "css/graph/graph.css" %}">
+  </head>
+
+  <body>
+
+    <div id="chart_container">
+      <div id="chart"></div>
+      <div id="legend_container">
+        <div id="smoother" title="Smoothing"></div>
+        <div id="legend"></div>
+      </div>
+      <div id="slider"></div>
+    </div>
+
+  </body>
+  <script src="{% static "js/vendor/d3.v3.min.js" %}" charset="utf-8"></script>
+  <script src="{% static "js/vendor/rickshaw.min.js" %}"></script>
+  <script>
+  var pitch_data = {{ pitch_data|safe }};
+  var timbre_data = {{ timbre_data|safe }};
+  var loudness_data = {{ loudness_data|safe }};
+
+  var graph = new Rickshaw.Graph( {
+    element: document.getElementById("chart"),
+    width: 960,
+    height: 500,
+    renderer: 'line',
+    min: 'auto',
+    series: [{
+    			color: "#c05020",
+    			data: pitch_data,
+    			name: 'Pitch'
+    		}, {
+    			color: "#30c020",
+    			data: timbre_data,
+    			name: 'Timbre'
+    		}, {
+    			color: "#6060c0",
+    			data: loudness_data,
+    			name: 'Loudness'
+    		}
+    ]
+  } );
+
+  graph.render();
+  var hoverDetail = new Rickshaw.Graph.HoverDetail( {
+  	graph: graph
+  } );
+
+  var legend = new Rickshaw.Graph.Legend( {
+  	graph: graph,
+  	element: document.getElementById('legend')
+
+  } );
+
+  var shelving = new Rickshaw.Graph.Behavior.Series.Toggle( {
+  	graph: graph,
+  	legend: legend
+  } );
+
+  var axes = new Rickshaw.Graph.Axis.Time( {
+  	graph: graph
+  } );
+  axes.render();
+  </script>
+  
+</html>

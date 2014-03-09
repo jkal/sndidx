@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row">
+  <div class="span12">
+    {% if results %}
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Artist</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for result in results %}
+        <tr>
+          <td>{{ result.song_id }}</td>
+          <td>{{ result.title }}</td>
+          <td>{{ result.artist }}</td>
+          <td><a href="{% url 'graph' result.song_id %}" target="_blank">Graph</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    No results.
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
